@@ -2,12 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:pokemon_app/model/PokemonBaseResponse.dart';
 
 class PokemonApiProvider {
-  final Dio dio = Dio();
-  final endpoint = "pokeapi.co/api/v2/pokemon";
+  final Dio _dio = Dio();
+  final _endpoint = "https://pokeapi.co/api/v2/pokemon";
 
   Future<PokemonBaseResponse> getAllPokemon() async {
+    print("am here");
     try {
-      Response response = await dio.get(endpoint);
+      Response response = await _dio.get(_endpoint);
       return PokemonBaseResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured : $error stackTrace:$stacktrace");
