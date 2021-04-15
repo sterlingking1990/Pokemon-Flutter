@@ -1,0 +1,49 @@
+import 'package:dio/dio.dart';
+import 'package:pokemon_app/model/PokemonBaseResponse.dart';
+
+class PokemonApiProvider {
+  final Dio dio = Dio();
+  final endpoint = "pokeapi.co/api/v2/pokemon";
+
+  Future<PokemonBaseResponse> getAllPokemon() async {
+    try {
+      Response response = await dio.get(endpoint);
+      return PokemonBaseResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured : $error stackTrace:$stacktrace");
+      PokemonBaseResponse.withError(_handleError(error));
+    }
+  }
+
+  String _handleError(DioError error) {
+    String errorDescription = "";
+    if (error is DioError) {
+      DioError dioError = error;
+      switch (dioError.type) {
+        case DioErrorType.cancel:
+          errorDescription = "Request to API Server was cancelled";
+          break;
+        case DioErrorType.connectTimeout:
+          errorDescription = "Connection timeout with API Server";
+          break;
+        case DioErrorType.other:
+          errorDescription =
+              "Connection to API Server failed due to internet connection";
+          break;
+        case DioErrorType.receiveTimeout:
+          errorDescription = "Receive timeout in connection with API Server";
+          break;
+        case DioErrorType.response:
+          errorDescription =
+              "Received invalid status code: ${dioError.response.statusCode}";
+          break;
+        case DioErrorType.sendTimeout:
+          errorDescription = "Send timeout in connection with API Server";
+          break;
+      }
+    } else {
+      errorDescription = "Unexception error occured";
+    }
+    return errorDescription;
+  }
+}
