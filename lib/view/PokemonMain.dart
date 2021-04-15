@@ -102,8 +102,27 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
                                       children: [
                                         Card(
                                             elevation: 100,
-                                            child: Image.network(
-                                                "https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png")),
+                                            child: Container(
+                                              child: Image.network(
+                                                  "https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png"),
+                                              decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                      begin:
+                                                          AlignmentDirectional
+                                                              .topStart,
+                                                      end: AlignmentDirectional
+                                                          .topEnd,
+                                                      stops: [
+                                                    0.3,
+                                                    0.7,
+                                                    1
+                                                  ],
+                                                      colors: <Color>[
+                                                    Color(0x9c9cfff),
+                                                    Color(0xc3c3bbbb),
+                                                    Color(0x1212dddd)
+                                                  ])),
+                                            )),
                                         Text(
                                           snapshot.data.results[i].name,
                                           style: TextStyle(
