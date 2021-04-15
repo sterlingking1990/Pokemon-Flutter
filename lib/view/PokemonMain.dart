@@ -26,6 +26,7 @@ class PokemonAppEntry extends StatefulWidget {
 
 class _PokemonAppEntryState extends State<PokemonAppEntry> {
   int pokemonCharSize;
+  TextEditingController etSearchPokemon;
 
   @override
   void setState(fn) {
@@ -41,6 +42,7 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
   void initState() {
     // TODO: implement initState
     pokemonAppState.getPokemonCharacters();
+    etSearchPokemon = TextEditingController();
     super.initState();
   }
 
@@ -78,6 +80,16 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
             )
           ],
         ),
+        Padding(
+            padding: EdgeInsets.all(10),
+            child: TextField(
+              controller: etSearchPokemon,
+              decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(5),
+                  hintText: "Search by pokemon name",
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10))),
+            )),
         Expanded(
             flex: 1,
             child: Padding(
