@@ -1,18 +1,31 @@
 import 'package:dio/dio.dart';
 import 'package:pokemon_app/model/PokemonBaseResponse.dart';
+import 'package:pokemon_app/model/SinglePokemonResponse.dart';
 
 class PokemonApiProvider {
   final Dio _dio = Dio();
   final _endpoint = "https://pokeapi.co/api/v2/pokemon";
 
+  final _endpointPokemonSearchByName = "https://pokeapi.co/api/v2/pokemon/";
+
   Future<PokemonBaseResponse> getAllPokemon() async {
-    print("am here");
     try {
       Response response = await _dio.get(_endpoint);
       return PokemonBaseResponse.fromJson(response.data);
     } catch (error, stacktrace) {
       print("Exception occured : $error stackTrace:$stacktrace");
       PokemonBaseResponse.withError(_handleError(error));
+    }
+  }
+
+  Future<SinglePokemonResponse> getParticularPokemon(String pokemonName) async {
+    try {
+      Response response =
+          await _dio.get(_endpointPokemonSearchByName + pokemonName);
+      return SinglePokemonResponse.fromJson(response.data);
+    } catch (error, stacktrace) {
+      print("Exception occured : $error stackTrace:$stacktrace");
+      SinglePokemonResponse.withError(_handleError(error));
     }
   }
 

@@ -13,6 +13,7 @@ class PokemonBaseResponse {
       : count = json['count'],
         next = json['next'],
         previous = json['previous'],
+        error = "",
         results = List<Results>.from(
           json['results'].map((e) => Results.fromJson(e)),
         );
@@ -22,6 +23,7 @@ class PokemonBaseResponse {
         'next': this.next,
         'previous': this.previous,
         'results': this.results?.map((e) => e.toJson())?.toList(),
+        'error': this.error,
       };
 
   PokemonBaseResponse.withError(String error)
