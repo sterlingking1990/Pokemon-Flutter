@@ -41,7 +41,7 @@ class PokemonDetailState extends State<PokemonDetail> {
                   color: Colors.green,
                 ),
                 child: Text(
-                  "Activities",
+                  "Abilities",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -120,7 +120,7 @@ class PokemonDetailState extends State<PokemonDetail> {
                               colors: [
                             Color(0xa9a9333a),
                             Color(0xC3C39999),
-                            Color(0x1111bbbb)
+                            Color(0xffffbf00)
                           ],
                               stops: [
                             0.3,
