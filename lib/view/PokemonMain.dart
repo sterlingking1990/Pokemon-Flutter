@@ -2,8 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:pokemon_app/model/PokemonBaseResponse.dart';
+import 'package:pokemon_app/model/PokemonCharacterPoDo.dart';
 import 'package:pokemon_app/model/SinglePokemonResponse.dart';
 import 'package:pokemon_app/network/appstatemanagement.dart';
+import 'package:pokemon_app/view/PokemonDetail.dart';
 
 void main() => runApp(PokemonMain());
 
@@ -31,6 +33,16 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
   TextEditingController etSearchPokemon;
 
   String searching = "";
+
+  loadPokemonDetail(String pokemonName, int pokemonId) async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            settings: RouteSettings(
+                name: "pokemonName",
+                arguments: PokemonCharacterPodo(pokemonName, pokemonId)),
+            builder: (context) => PokemonDetail()));
+  }
 
   @override
   void setState(fn) {
@@ -136,8 +148,12 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
                                     Card(
                                         elevation: 100,
                                         child: Container(
-                                          child: Image.network(
-                                              "https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png"),
+                                          child: InkWell(
+                                              onTap: () => loadPokemonDetail(
+                                                  snapshot.data.results[i].name,
+                                                  (i + 1)),
+                                              child: Image.network(
+                                                  "https://pokeres.bastionbot.org/images/pokemon/${i + 1}.png")),
                                           decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                   begin: AlignmentDirectional
@@ -196,8 +212,12 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
                                     Card(
                                         elevation: 100,
                                         child: Container(
-                                          child: Image.network(
-                                              "https://pokeres.bastionbot.org/images/pokemon/${snapshots.data.id}.png"),
+                                          child: InkWell(
+                                              onTap: () => loadPokemonDetail(
+                                                  snapshots.data.name,
+                                                  snapshots.data.id),
+                                              child: Image.network(
+                                                  "https://pokeres.bastionbot.org/images/pokemon/${snapshots.data.id}.png")),
                                           decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                   begin: AlignmentDirectional
@@ -255,7 +275,7 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
     });
   }
 
-  refreshMovieList(BuildContext context) {
+  refreshPokemonCharacters(BuildContext context) {
     pokemonAppState.getPokemonCharacters();
   }
 
@@ -266,7 +286,7 @@ class _PokemonAppEntryState extends State<PokemonAppEntry> {
       children: [
         Text("Error occured: $error"),
         MaterialButton(
-            onPressed: refreshMovieList(context),
+            onPressed: refreshPokemonCharacters(context),
             color: Colors.amber,
             elevation: 100,
             child: Icon(Icons.refresh, color: Colors.amber, size: 50))
